@@ -1,0 +1,10 @@
+body,input[type="text"]{
+	font-family:'Montserrat',sans-serif;
+}
+
+svg.symbols{
+	display:none;
+	}
+.AppContainer {
+	padding:2rem;
+}
