@@ -1,5 +1,4 @@
 import React from 'react';
-import update from 'immutability-helper';
 import Display from './components/display/index'
 import Settings from './components/settings/index'
 import WebFont from 'webfontloader';
@@ -61,10 +60,10 @@ export class App extends React.Component {
 		super(props);
 		this.state = initState;
 	}
-	
-	handleSettings = (props) =>this.setState({...props}, ()=>console.log(this.state, ' parent'))
+	//add callback to send changed data to remote data source
+	handleSettings = (props) =>this.setState({...props})
 
-//added svgdefs to top of body for use in the iconPicker component	
+	//added svgdefs to top of body for use in the iconPicker component	
 	render(){
 	  return (
 		<>
@@ -96,9 +95,6 @@ export class App extends React.Component {
 				<Settings 
 					settings={this.state}
 					onChange={this.handleSettings}
-					onColorChange={this.handleSettings}
-					onIconChange={this.handleSettings}
-					onClose={this.handleClose}
 				/>
 		    </AppContainer>
 	    </>

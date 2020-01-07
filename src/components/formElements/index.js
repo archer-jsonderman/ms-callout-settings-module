@@ -36,7 +36,9 @@ const StyledPicker = styled.div(props=>({
 	  margin: '0 0 0 10px',
 	  display: 'grid',
 	  gridTemplateColumns: 'auto 16px',
-	  gridColumnGap:'0.4rem'
+	  gridColumnGap:'0.4rem',
+	  gridRow:'2/3',
+	  gridColumn:'2'
 
 }))
 const StyledSwatch = styled.div(props=>({
@@ -45,6 +47,7 @@ const StyledSwatch = styled.div(props=>({
           borderRadius: '2px',
           background:props.color,
           border:'solid 1px #555'
+          
           
 }))
 const StyledArrow = styled.div`
@@ -73,13 +76,14 @@ const StyledLabel = styled.label`
 	grid-column:1/3;
 
 `
+
 export class SettingsInput extends React.Component{
 	constructor(props) {
 	    super(props);	    
 		this.state={displayColorPicker:false}
   	}
   	//using local state here, since this is the only component that cares about this setting
-  	
+
 	handleClose = (props) =>this.setState({displayColorPicker:false})
 	
 
@@ -93,26 +97,32 @@ export class SettingsInput extends React.Component{
 		if(!event){
 			changeObj.color = color.hex
 		}else{
+			if(event.target.value.length >=event.target.maxLength){
+				this.setState({errors:{maxlen:{valid:true,text:'Maximum characters reached'}}})
+			}else{
+				this.setState({errors:{maxlen:{valid:false,text:''}}})
+			}
 			changeObj.content = event.target.value;
 		}
 		this.props.onChange({[this.props.name]:changeObj})
 	}
 	
 		render(){
-		const {settings, name} = this.props		
+		const {settings, name, labelText} = this.props	
+	
 		return (
 			<Row>
-				<StyledLabel>{this.props.labelText}</StyledLabel>
+				<StyledLabel>{labelText}</StyledLabel>
 				<StyledInput 
 					type="text" 
-					value={this.props.settings[name].content}
-					name={this.props.name}
+					value={settings[name].content}
+					name={name}
+					id={name}
 					onChange={(e)=>this.handleChange(null,e)}
-					maxLength='26'
 				/>
 				<StyledPicker onClick={ this.handleColorClick }>
 					<StyledSwatch
-						color={this.props.settings[name].color}
+						color={settings[name].color}
 					/>
 					<StyledArrow/>
 				</StyledPicker>
@@ -123,7 +133,7 @@ export class SettingsInput extends React.Component{
 					 	onClick={ this.handleClose }
 					 />
 					 	<SketchPicker 
-					 		color={this.props.settings[name].color}
+					 		color={settings[name].color}
 					 		presetColors={[]}
 					 		onChangeComplete={(color)=>this.handleChange(color,null)}
 					 		disableAlpha={true}
@@ -170,32 +180,33 @@ export class IconSelector extends React.Component {
 	};
 
 	  render(){ 
+		  const {settings} = this.props;
 		return (
 			<Row>
 				<StyledLabel>Icon</StyledLabel>
 		    		<FontIconPicker
 							icons={['alarm','city','crime','home','police']}
-							value={this.props.settings.icon.icon}
+							value={settings.icon.icon}
 							onChange={(val)=>this.handleChange(null,val)}
 							iconsPerPage={5}
 							showSearch={false}
 							showCategory={false}
 							closeOnSelect={true}
-							renderFunc={(svg)=>this.renderSVG(svg, this.props.settings.icon.icon)}
+							renderFunc={(svg)=>this.renderSVG(svg, settings.icon.icon)}
 							/>
 					<StyledPicker onClick={ this.handleColorClick }>
 					<StyledSwatch
-						color={this.props.settings.icon.color}
+						color={settings.icon.color}
 						 />
 						 <StyledArrow/>
 					</StyledPicker>
 					{ this.state.displayColorPicker ? 
 						 <Popover>
-						 <Cover 
-						 	onClick={ this.handleClose }
-						 />
+							 <Cover 
+							 	onClick={ this.handleClose }
+							 />
 						 	<SketchPicker 
-						 		color={this.props.settings.icon.color}
+						 		color={settings.icon.color}
 						 		presetColors={[]}
 						 		onChangeComplete={(color)=>this.handleChange(color,null)}
 						 		disableAlpha={true}

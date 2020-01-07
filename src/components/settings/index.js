@@ -12,6 +12,8 @@ const SettingsBox = styled.div`
 		}
 `
 
+	
+
 export default class Settings extends React.Component {	
 	//render function for each item in the IconPicker component
 	//since this is using a custom icon set (i.e. not FontAwesome, icomoon, etc)
@@ -26,12 +28,11 @@ export default class Settings extends React.Component {
 			</>
 		)
 	};
-	//function to lift changes to parent state
-	handleIconChange=(val)=>this.props.onIconChange({icon:{icon:val, color:this.props.settings.icon.color}})
 	  render(){ 
 //TODO: set these up with a map function before return to clean up.
 		return (
-	    	<SettingsBox>	    	
+			
+	    	<SettingsBox>    	
 	    		<SettingsInput
 	    			labelText='Metric'
 	    			name='metric'
