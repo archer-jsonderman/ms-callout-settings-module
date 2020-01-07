@@ -5,7 +5,7 @@ import * as Icons from '../icons/icons'
 const defaultColor = '#333';
 
 const DisplayBox = styled.div`
-	width: 100%;
+	width: auto;
 	max-width:700px;
     padding: 1rem 2rem;
     border: solid 1px #ccc;
@@ -18,34 +18,60 @@ const DisplayBox = styled.div`
 	    * {
 	    margin: 0;
 	}
+	@media(max-width:768px){
+		padding:.5rem;
+		grid-template: 1fr auto/37% 1fr;
+		}
 
 `
 const CalloutIcon = styled.div`
 	grid-row: 1/5;
+	@media(max-width:768px){
+		grid-row:1/3;
+		width:107px;
+		}
 	svg {
 	    width: 100%;
 	    height: auto;
 	}
 	`
-const Subject = styled.p(props=>({
-	color: props.color || defaultColor,
-	fontSize:'1.2rem'
-	}))	  
-const Metric = styled.h1(props=>({
-	color: props.color || defaultColor,
-	fontSize: '1.6rem',
-	fontWeight: 800
-	}))
-const Unit = styled.h3(props=>({
-	color: props.color || defaultColor,
-	fontWeight: 800,
-    fontSize: '1.2rem'
-	}))
-const Value = styled.h2(props=>({
-	color: props.color || defaultColor,
-	fontSize: '2.3rem',
-    fontWeight: 800
-	}))
+const Subject = styled.p`
+	color:${props=>props.color || defaultColor};
+	font-size:1.2rem;
+	@media(max-width:768px){
+		 font-size:4.3vw;
+		 grid-column: 1/3;
+		 text-align: center;
+		 line-height: 9vw;
+	 }
+	`  
+const Metric = styled.h1`
+	color: ${props=>props.color || defaultColor};
+	font-size: 1.6rem;
+	font-weight: 800;
+	@media(max-width:768px){
+		 font-size:6vw;
+		 grid-column: 1/3;
+		 text-align: center;
+		 margin-top: 1rem;
+		}
+	`
+const Unit = styled.h3`
+	color:${props=> props.color || defaultColor};
+	font-weight: 800;
+    font-size: 1.2rem;
+    @media(max-width:768px){
+		font-size:7vw;
+		}
+	`
+const Value = styled.h2`
+	color:${props=>props.color || defaultColor};
+	font-size: 2.3rem;
+    font-weight: 800;
+    @media(max-width:768px){
+		font-size:14vw;
+		}
+	`
 
 export class Display extends React.Component {		
 	render(){

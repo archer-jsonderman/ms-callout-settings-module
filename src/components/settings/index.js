@@ -7,6 +7,9 @@ const SettingsBox = styled.div`
 	width:300px;
 	margin:2rem auto; 
 	padding: .7rem;
+	@media(max-width:768px){
+		 width:auto;
+		}
 `
 
 export default class Settings extends React.Component {	

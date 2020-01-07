@@ -4,7 +4,7 @@ import Display from './components/display/index'
 import Settings from './components/settings/index'
 import WebFont from 'webfontloader';
 import {ReactComponent as SvgSymbols} from './components/icons/defs/svg-defs.svg'
-import './App.css';
+import styled from 'styled-components';
 
 WebFont.load({
   google: {
@@ -41,19 +41,35 @@ const initState = {
 	}
 	
 }
+
+const StyledSymbols = styled(SvgSymbols)`
+	display:none;
+`
+const AppContainer = styled.div`
+	padding:2rem;
+	font-family:'Montserrat',sans-serif;
+	input[type="text"]{
+		font-family:'Montserrat',sans-serif;
+	}
+	@media(max-width: 768px){
+		padding:.2rem;
+		}
+		
+`
 export class App extends React.Component {
 	constructor(props){
 		super(props);
 		this.state = initState;
 	}
+	
 	handleSettings = (props) =>this.setState({...props}, ()=>console.log(this.state, ' parent'))
 
 //added svgdefs to top of body for use in the iconPicker component	
 	render(){
 	  return (
 		<>
-		  	<SvgSymbols className='symbols'/>
-		    <div className='AppContainer'>
+		  	<StyledSymbols/>
+		    <AppContainer>
 		    	<Display
 		    		icon={{
 			    		icon:this.state.icon.icon,
@@ -84,7 +100,7 @@ export class App extends React.Component {
 					onIconChange={this.handleSettings}
 					onClose={this.handleClose}
 				/>
-		    </div>
+		    </AppContainer>
 	    </>
 	  );
     }
